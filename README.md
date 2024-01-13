@@ -8,28 +8,28 @@ Mamba main building block is selective state spaces, which is a computation of t
 
 
 $$
-h(t + 1) = Ax(t) + Bu(t)
+h(t + 1) = Ah(t) + Bx(t) \tag{1}
 $$
 
 $$
-y(t) = Ch(t) + Du(t)
+y(t) = Ch(t) + Dx(t) \tag{2}
 $$
 
-For discret modalities like texts and genomics, A,B will be discretised by a timestep ∆.
+
+For discret modalities like texts and genomics, A and B will be discretised by a timestep ∆.
 
 **Interpretation of ∆:**
-- *Function:* ∆ controls the balance between focusing on or ignoring the current input \(u_t\).
-- *Effect:* A large ∆ resets the state \(h\) and emphasizes the current input, while a small ∆ maintains the state, effectively ignoring the current input.
-- *Relation to SSMs:* Equations (1)-(2) can be seen as a continuous system discretized by a timestep ∆. A large ∆ represents the system focusing on the current input for an extended duration, while a small ∆ signifies a transient input that is ignored.
+- *Function:* ∆ controls the balance between focusing on or ignoring the current input $(x_t)$.
+- *Effect:* A large ∆ resets the state $(h)$ and emphasises the current input, while a small ∆ maintains the state, effectively ignoring the current input.
+- *Relation to SSMs:* Equations (1)-(2) can be seen as a continuous system discretised by a timestep ∆. A large ∆ represents the system focusing on the current input for an extended duration, while a small ∆ signifies a transient input that is ignored. The selectivity in ∆ is crucial to ensure selectivity in (A, B), and it serves as the primary source of improvement.
 
 **Interpretation of A:**
-- *Role:* A parameter interacts with ∆ through \(A = \exp(\Delta A)\) (discretisation equation).
-- *Effect:* The selectivity in ∆ is crucial to ensure selectivity in (A, B), and it serves as the primary source of improvement.
+- *Role:* A parameter interacts with ∆ through $A = \exp(\Delta A)$ (discretisation equation).
 - *hypothesis (Mamba paper page 9):* Making A selective in addition to or instead of ∆ could yield similar performance, but for simplicity, it is left out.
 
 **Interpretation of B and C:**
 - *Importance:* Selectivity is vital for filtering out irrelevant information, allowing a sequence model to compress context efficiently.
-- *Role of B and C:* Modifying B and C to be selective provides finer control over incorporating input \(u_t\) into the state \(h_t\) or the state into the output \(y_t\).
+- *Role of B and C:* Modifying B and C to be selective provides finer control over incorporating input $(x_t)$ into the state $(h_t)$ or the state into the output $(y_t)$.
 - *Interpretation:* B and C enable the model to modulate recurrent dynamics based on content (input) and context (hidden states), respectively.
 
 This computation (i.e SSM block) is implemented in *selective_scan.py* (it's the reference implementation from [mamba code base](https://github.com/state-spaces/mamba/), and it's not the hardware-aware implementation, check: https://github.com/state-spaces/mamba/tree/main/mamba_ssm/ops for more info)
@@ -53,7 +53,7 @@ conda env create -f environment.yml
 conda activate mamba_env
 ```
 ##### Train a Mamba
-config.ini contains model, and training arguments, feel free to play, and run the following to train:
+The 'config.ini' file includes model configurations and training arguments. You are free to define any model size; however, note that this implementation does not follow the hardware-friendly selective-span approach. Once you have configured the model size, and training argurments, proceed to run the training using the following command:
 ```
 python main.py -c config.ini
 ```
