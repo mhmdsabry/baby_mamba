@@ -4,7 +4,7 @@ An implementation of Mamba to develop an understanding of its functioning.
 ### Intro:
 Mamba is a recent sequence modelling architecture proposed by Albert Gu and Tri Dao (https://arxiv.org/abs/2312.00752). Mamba selling points are fast inference (5x faster than transformers) and linear scaling with sequence length. 
 
-Mamba main building block is selective state spaces, which is a computation of the following equations:
+Mamba main building block is a computation of the following equations (State Space Model):
 
 
 $$
@@ -16,7 +16,9 @@ y(t) = Ch(t) + Dx(t) \tag{2}
 $$
 
 
-For discret modalities like texts and genomics, A and B will be discretised by a timestep ∆.
+For discrete modalities such as texts and genomics, A and B will be discretised by a timestep ∆.
+ 
+Mamba proposed computing an input-dependent version of the preceding equations by making ∆, B, and C functions of the input. This ensures a selection mechanism over the input, similar to the attention mechanism in transformers.
 
 **Interpretation of ∆:**
 - *Function:* ∆ controls the balance between focusing on or ignoring the current input $(x_t)$.
@@ -28,7 +30,6 @@ For discret modalities like texts and genomics, A and B will be discretised by a
 - *hypothesis (Mamba paper page 9):* Making A selective in addition to or instead of ∆ could yield similar performance, but for simplicity, it is left out.
 
 **Interpretation of B and C:**
-- *Importance:* Selectivity is vital for filtering out irrelevant information, allowing a sequence model to compress context efficiently.
 - *Role of B and C:* Modifying B and C to be selective provides finer control over incorporating input $(x_t)$ into the state $(h_t)$ or the state into the output $(y_t)$.
 - *Interpretation:* B and C enable the model to modulate recurrent dynamics based on content (input) and context (hidden states), respectively.
 
@@ -56,12 +57,5 @@ conda activate mamba_env
 The 'config.ini' file includes model configurations and training arguments. You are free to define any model size; however, note that this implementation does not follow the hardware-friendly selective-span approach. Once you have configured the model size, and training argurments, proceed to run the training using the following command:
 ```
 python main.py -c config.ini
-```
-
-##### Eval loss:
-
-
-##### Generated text:
-```
 ```
 
