@@ -35,11 +35,11 @@ Mamba proposed computing an input-dependent version of the preceding equations b
 
 This computation (i.e SSM block) is implemented in *selective_scan.py* (it's the reference implementation from [mamba code base](https://github.com/state-spaces/mamba/), and it's not the hardware-aware implementation, check: https://github.com/state-spaces/mamba/tree/main/mamba_ssm/ops for more info)
 
-The Figure below describes the interaction of these equations:
+The Figure (from mamba paper) below describes the interaction of these equations:
 
 ![SSM Block](./assets/ssm.png)
 
-Just like other mainstream architectures, Mamba interleaves this computation (SSM block) with MLP layers, a normalisation technique and a residual connections, they have also added a conv layer (Figure below):
+Just like other mainstream architectures, Mamba interleaves this computation (SSM block) with MLP layers, a normalisation technique and a residual connections, they have also added a conv layer (Figure-from mamba paper-below):
 
 <p align="center">
     <img alt="Mamba Architecture" src="./assets/mamba_architecture.png">
