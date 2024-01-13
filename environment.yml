@@ -1,0 +1,16 @@
+name: mamba_env
+channels:
+        - defaults
+        - conda-forge
+dependencies:
+        - python=3.8
+
+        - pip
+        - pip:
+                - numpy
+                - einops
+                - tqdm
+                - wandb
+                - accelerate
+
+        - pytorch::pytorch=1.12.1
