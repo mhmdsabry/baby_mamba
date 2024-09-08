@@ -7,13 +7,9 @@ Mamba is a recent sequence modelling architecture proposed by Albert Gu and Tri 
 Mamba main building block is a computation of the following equations (State Space Model):
 
 
-$$
-h(t + 1) = Ah(t) + Bx(t) \tag{1}
-$$
+`h(t + 1) = Ah(t) + Bx(t)`  (1)
 
-$$
-y(t) = Ch(t) + Dx(t) \tag{2}
-$$
+`y(t) = Ch(t) + Dx(t)`  (2)
 
 
 For discrete modalities such as texts and genomics, A and B will be discretised by a timestep ∆.
